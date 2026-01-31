@@ -1,3 +1,5 @@
-export default {
-base: '/wordlearning/'
-}
+import { defineConfig } from "vite";
+export default defineConfig({
+  base: '/wordlearning/',
+  plugins: [react()],
+})
