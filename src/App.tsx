@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { supabase } from './utils/supabase'
 interface Translation {
   pos: string
   tran_cn: string
@@ -9,7 +10,8 @@ interface Translation {
 function App() {
   const [count, setCount] = useState(0)
   const [url, setUrl] = useState('https://v2.xxapi.cn/api/englishwords'+ '?word=' +'about');
-  const [translations, setTranslations] = useState<Translation[]>([])
+  const [translations, setTranslations] = useState<Translation[]>([]);
+  const [words, setWords] = useState<any[]>([])
 
   useEffect(() => {
   axios.get(url)
@@ -26,6 +28,18 @@ function App() {
       alert("出错了！"+error.message);       
      });
  }, [url]);
+  useEffect(() => {
+    async function getWords() {
+      const { data: words } = await supabase.from('words').select('*').limit(10);
+      console.log(words);
+      if (words && words.length >= 1) {
+        console.log(words);
+        setWords(words)
+      }
+    }
+    getWords()
+  }, [])
+
 return (
     <div className="App">
       <div>
@@ -49,6 +63,12 @@ return (
             </div>
           ))}
         </h1>
+        <ul>
+          {words.map((word) => (
+            <li key={word.id}>{word.word} 翻译{word.description}</li>
+           ))}
+            
+        </ul>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
