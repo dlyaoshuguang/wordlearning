@@ -38,7 +38,7 @@ export default function App() {
   };
   useEffect(() => {
     async function getWordDatas() {
-      const { data: words } = await supabase.from('words').select('*').limit(10);
+      const { data: words } = await supabase.from('words').select('*');
       console.log(words);
       if (words && words.length >= 1) {
         console.log(words);
@@ -85,7 +85,14 @@ useEffect(() => {
         alert("出错了！"+error.message);       
       });
   }, [url]);
-
+const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
+  if (addedFlag) {
+      setWordData(newWordData);
+      setWordDatas(prev => [...prev, newWordData]);
+      setTotalWords(prev => prev + 1);
+      setCurrentIndex(wordDatas.length + 1);
+  }
+}
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-80">
@@ -145,6 +152,7 @@ useEffect(() => {
               us={us}
               gb={gb}
               isLoading={isLoading}
+              onNewWordClose={handleNewWordClose}
             />
 
             <button

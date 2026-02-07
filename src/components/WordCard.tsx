@@ -1,4 +1,6 @@
 import { Phrase, Sentence, Translation, WordData } from "./baseData";
+import { NewWordModal } from "./NewWordModal";
+import { useState } from "react";
 interface WordCardProps {
   wordData?: WordData
   //word: string
@@ -9,6 +11,7 @@ interface WordCardProps {
   isLoading: boolean
   gb?: string
   us?: string
+  onNewWordClose?: (addedFlag: boolean,newWordData: WordData) => void
 }
 export const WordCard = ({ 
     wordData, 
@@ -18,8 +21,10 @@ export const WordCard = ({
     sentences, 
     isLoading, 
     gb, 
-    us
+    us,
+    onNewWordClose,
     }: WordCardProps) => {
+        const [showNewWordModal, setShowNewWordModal] = useState(false);
         if (isLoading||!wordData?.word) {
             return (
                 <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-gray-400 text-white">
@@ -27,8 +32,15 @@ export const WordCard = ({
                 </div>
             )
         }
+        const handleNewWordClose = (addedFlag: boolean, newWordData: WordData) => {
+            setShowNewWordModal(false);
+            if (onNewWordClose) {
+                onNewWordClose(addedFlag, newWordData);
+            }
+        };
     return (
         <>
+        <NewWordModal show={showNewWordModal} onClose={handleNewWordClose}/>
         <div>
             <div className="mb-4">
                 <h2 className="text-2xl">{wordData?.word}</h2>
@@ -68,5 +80,10 @@ export const WordCard = ({
                 <p key={index}>{s.s_content} - {s.s_cn}</p>
             ))}
         </ul>
+        <button
+            onClick={() => setShowNewWordModal(true)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            ＋ 追加新单词
+        </button>
         </>
     )}

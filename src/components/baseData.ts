@@ -20,4 +20,7 @@ export interface Sentence {
   s_content: string
   s_cn: string
 }
+export interface HandleChangeEvent {
+  target: { value: string }
+}
 export const englishWordUrl = 'https://v2.xxapi.cn/api/englishwords';
