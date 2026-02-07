@@ -60,9 +60,11 @@ export const NewWordModal = ({ show, onClose }: NewWordModalProps) => {
     if (error) {
         console.error('Error:', error);
     } else {
-        console.log('Inserted data:', data);
-        setAddedFlag(true)
-        setNewWordData({word: newword, description: description})
+      console.log('Inserted data:', data);
+      setInputWord('');
+      setInputDescription('');
+      setAddedFlag(true)
+      setNewWordData({word: newword, description: description})
     }
   }
   const handleSubmit = async () => {

@@ -5,6 +5,15 @@ import { supabase } from "./utils/supabase";
 import { UserData, WordData,englishWordUrl,Phrase,Sentence,Translation } from './components/baseData';
 import { WordCard } from './components/WordCard';
 export default function App() {
+  // 从localStorage获取词库位置
+  const getStoredIndex = () => {
+    const stored = localStorage.getItem(`SupabaseWordIndex`)
+    return stored ? parseInt(stored, 10) : 1
+  }
+  // 存储词库位置到localStorage
+  const storeIndex = (index: number) => {
+    localStorage.setItem(`SupabaseWordIndex`, index.toString())
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<UserData>({ id: "", email: "" });
@@ -13,7 +22,7 @@ export default function App() {
   const [wordDatas, setWordDatas] = useState<WordData[]>([])//单词列表
   const [wordData, setWordData] = useState<WordData | null>(null);//单词数据
   const [totalWords, setTotalWords] = useState(0)// 总单词数
-  const [currentIndex, setCurrentIndex] = useState(1)// 当前单词索引
+  const [currentIndex, setCurrentIndex] = useState(() => getStoredIndex())// 当前单词索引
   const [url, setUrl] = useState(englishWordUrl + '?word=' + (wordData?.word || ''));//dan词API地址
   const [phrases, setPhrases] = useState<Phrase[]>([])
   const [sentences, setSentences] = useState<Sentence[]>([])
@@ -61,7 +70,7 @@ useEffect(() => {
   let newWord=wordDatas[currentIndex-1];
   setWordData(newWord);
   setUrl(englishWordUrl + '?word=' + newWord?.word);
-}, [wordDatas,currentIndex]);
+}, [wordDatas,currentIndex,isLoading]);
   useEffect(() => {
     axios.get(url)
       .then(response => {
@@ -85,6 +94,9 @@ useEffect(() => {
         alert("出错了！"+error.message);       
       });
   }, [url]);
+  useEffect(() => {
+    storeIndex(currentIndex)
+  }, [currentIndex])
 const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
   if (addedFlag) {
       setWordData(newWordData);
