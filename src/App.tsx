@@ -47,7 +47,7 @@ export default function App() {
   };
   useEffect(() => {
     async function getWordDatas() {
-      const { data: words } = await supabase.from('words').select('*');
+      const { data: words } = await supabase.from('words').select('*').order('id', { ascending: true });
       console.log(words);
       if (words && words.length >= 1) {
         console.log(words);
@@ -103,6 +103,12 @@ const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
       setWordDatas(prev => [...prev, newWordData]);
       setTotalWords(prev => prev + 1);
       setCurrentIndex(wordDatas.length + 1);
+  }
+}
+const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
+  if (editedFlag && editedWordData) {
+      setWordData(editedWordData);
+      setWordDatas(prev => prev.map(w => w.word === editedWordData.word ? editedWordData : w));
   }
 }
   return (
@@ -165,6 +171,7 @@ const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
               gb={gb}
               isLoading={isLoading}
               onNewWordClose={handleNewWordClose}
+              onEditWordFinished={handleEditWordClose}
             />
 
             <button

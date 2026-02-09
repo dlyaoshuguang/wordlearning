@@ -1,4 +1,5 @@
 import { Phrase, Sentence, Translation, WordData } from "./baseData";
+import { EditWordModal } from "./EditWordModal";
 import { NewWordModal } from "./NewWordModal";
 import { useState } from "react";
 interface WordCardProps {
@@ -12,6 +13,7 @@ interface WordCardProps {
   gb?: string
   us?: string
   onNewWordClose?: (addedFlag: boolean,newWordData: WordData) => void
+  onEditWordFinished?: (editedFlag: boolean, editedWordData: WordData) => void
 }
 export const WordCard = ({ 
     wordData, 
@@ -23,8 +25,10 @@ export const WordCard = ({
     gb, 
     us,
     onNewWordClose,
+    onEditWordFinished,
     }: WordCardProps) => {
         const [showNewWordModal, setShowNewWordModal] = useState(false);
+        const [showEditWordModal, setShowEditWordModal] = useState(false);
         if (isLoading||!wordData?.word) {
             return (
                 <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-gray-400 text-white">
@@ -38,9 +42,16 @@ export const WordCard = ({
                 onNewWordClose(addedFlag, newWordData);
             }
         };
+        const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
+            setShowEditWordModal(false);
+            if (onEditWordFinished) {
+                onEditWordFinished(editedFlag, editedWordData);
+            }
+        };
     return (
         <>
         <NewWordModal show={showNewWordModal} onClose={handleNewWordClose}/>
+        <EditWordModal show={showEditWordModal} onClose={handleEditWordClose} wordData={wordData} />
         <div>
             <div className="mb-4">
                 <h2 className="text-2xl">{wordData?.word}</h2>
@@ -65,7 +76,7 @@ export const WordCard = ({
         <h2 className="text-xl font-bold mt-4 mb-2">翻译</h2>
         <ul className="list-disc list-inside mb-4">
             {translations.map((t, index) => (
-                <p key={index}>{t.pos}{t.tran_cn}</p>
+                <p key={index}>{t.pos}.{t.tran_cn}</p>
             ))}
         </ul>
         <h2 className="text-xl font-bold mt-4 mb-2">短语</h2>
@@ -84,6 +95,11 @@ export const WordCard = ({
             onClick={() => setShowNewWordModal(true)}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             ＋ 追加新单词
+        </button>
+        <button
+            onClick={() => setShowEditWordModal(true)}
+            className="ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+            ✏️ 编辑释义
         </button>
         </>
     )}

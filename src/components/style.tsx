@@ -12,7 +12,7 @@ export const ModalOverlay = styled.div`
   z-index: 1000;
 `
 export const ModalContent = styled.div<{ $isOpen: boolean }>`
-  background: rgba(7, 160, 225, 0.66);
+  background: rgba(176, 188, 194, 0.66);
   color: white;
   backdrop-filter: blur(10px);
   border-radius: 24px;
