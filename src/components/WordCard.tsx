@@ -4,6 +4,7 @@ import { NewWordModal } from "./NewWordModal";
 import { UnknownWordsModal } from "./UnknownWordsModal";
 import { useState } from "react";
 interface WordCardProps {
+    userId?: string
   wordData?: WordData
   //word: string
   description: string
@@ -17,6 +18,7 @@ interface WordCardProps {
   onEditWordFinished?: (editedFlag: boolean, editedWordData: WordData) => void
 }
 export const WordCard = ({ 
+    userId,
     wordData, 
     description, 
     translations, 
@@ -70,8 +72,8 @@ export const WordCard = ({
         };
     return (
         <>
-        <NewWordModal show={showNewWordModal} onClose={handleNewWordClose}/>
-        <EditWordModal show={showEditWordModal} onClose={handleEditWordClose} wordData={wordData} />
+        <NewWordModal userId={userId} show={showNewWordModal} onClose={handleNewWordClose}/>
+        <EditWordModal userId={userId} show={showEditWordModal} onClose={handleEditWordClose} wordData={wordData} />
         <UnknownWordsModal
           show={showUnknown}
           onClose={() => setShowUnknown(false)}

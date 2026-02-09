@@ -3,10 +3,11 @@ import type {WordData,HandleChangeEvent} from './baseData'
 import { supabase } from "../utils/supabase";
 import {ModalOverlay,ModalContent} from './style'
 interface NewWordModalProps {
+  userId?: string
   show: boolean
   onClose: (addedFlag: boolean, newWordData: WordData) => void
 }
-export const NewWordModal = ({ show, onClose }: NewWordModalProps) => {
+export const NewWordModal = ({ userId, show, onClose }: NewWordModalProps) => {
 
   const [inputWord, setInputWord] = useState('');
   const [inputDescription, setInputDescription] = useState('');
@@ -47,13 +48,6 @@ export const NewWordModal = ({ show, onClose }: NewWordModalProps) => {
     }
   }
   async function insertWord(newword: string, description: string) {
-    const { data: userData, error: userError } = await supabase.auth.getUser();
-    if (userError) {
-        console.error('Error fetching user data:', userError);
-        alert("未知错误，请稍后再试");
-        return;
-    }
-    const userId = userData?.user?.id || '';
     const { data, error } = await supabase
         .from('words')
         .insert({word: newword, description: description, user_id: userId })
@@ -80,8 +74,8 @@ return (
         <label>
         输入新单词：<input type="text" value={inputWord} onChange={handleWordChange} />
         <p>新单词: {inputWord}</p>
-        输入描述：<input type="text" value={inputDescription} onChange={handleDescriptionChange} />
-        <p>描述: {inputDescription}</p>
+        输入释义：<input type="text" value={inputDescription} onChange={handleDescriptionChange} />
+        <p>释义: {inputDescription}</p>
         <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-5" onClick={() => handleSubmit()}>追加</button>
         <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-5" onClick={() => onClose(addedFlag, newWordData)}>关闭</button>
         </label>

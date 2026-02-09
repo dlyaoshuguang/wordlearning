@@ -29,6 +29,7 @@ export default function App() {
   const [translations, setTranslations] = useState<Translation[]>([])
   const [us, setUs] = useState('美音');
   const [gb, setGb] = useState('英音');
+  const [userId, setUserId] = useState("");
   const handleSignup = async () => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) setError(error.message);
@@ -45,6 +46,9 @@ export default function App() {
     await supabase.auth.signOut();
     setUser({ id: "", email: "" });
   };
+  useEffect(() => {
+    setUserId(user.id);
+  }, [user]);
   useEffect(() => {
     async function getWordDatas() {
       const { data: words } = await supabase.from('words').select('*').order('id', { ascending: true });
@@ -97,6 +101,9 @@ useEffect(() => {
   useEffect(() => {
     storeIndex(currentIndex)
   }, [currentIndex])
+  useEffect(() => {if (wordData) {
+      setUrl(englishWordUrl + '?word=' + wordData.word);
+    }}, [wordData])
 const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
   if (addedFlag) {
       setWordData(newWordData);
@@ -162,6 +169,7 @@ const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
                 disabled={isLoading}>任一个 🎲
             </button>
             <WordCard
+              userId={userId}
               wordData={wordData||{id:0,word:'',description:''}}
               description={wordData?.description || ''}
               translations={translations}
