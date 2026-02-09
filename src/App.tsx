@@ -173,13 +173,14 @@ const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
               onNewWordClose={handleNewWordClose}
               onEditWordFinished={handleEditWordClose}
             />
-
-            <button
-              onClick={handleLogout}
-              className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
-            >
-              登出
-            </button>
+            <div>
+              <button
+                onClick={handleLogout}
+                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
+              >
+                登出
+              </button>
+            </div>
           </div>
         )}
       </div>
