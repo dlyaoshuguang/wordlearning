@@ -118,6 +118,11 @@ const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
       setWordDatas(prev => prev.map(w => w.word === editedWordData.word ? editedWordData : w));
   }
 }
+const handleDeleteWord = () => {
+      setWordDatas(prev => prev.filter(w => w.word !== wordData?.word));
+      setTotalWords(prev => prev - 1);
+      setCurrentIndex(prev => Math.max(1, prev - 1));
+  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-80">
@@ -180,6 +185,7 @@ const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
               isLoading={isLoading}
               onNewWordClose={handleNewWordClose}
               onEditWordFinished={handleEditWordClose}
+              onDeleteWord={handleDeleteWord}
             />
             <div>
               <button

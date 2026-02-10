@@ -16,6 +16,7 @@ interface WordCardProps {
   us?: string
   onNewWordClose?: (addedFlag: boolean,newWordData: WordData) => void
   onEditWordFinished?: (editedFlag: boolean, editedWordData: WordData) => void
+onDeleteWord?: () => void
 }
 export const WordCard = ({ 
     userId,
@@ -29,6 +30,7 @@ export const WordCard = ({
     us,
     onNewWordClose,
     onEditWordFinished,
+    onDeleteWord,
     }: WordCardProps) => {
         const [showNewWordModal, setShowNewWordModal] = useState(false);
         const [showEditWordModal, setShowEditWordModal] = useState(false);
@@ -70,10 +72,16 @@ export const WordCard = ({
                 onEditWordFinished(editedFlag, editedWordData);
             }
         };
+        const handleDeleteWord = () => {
+            setShowEditWordModal(false);
+            if (onDeleteWord) {
+                onDeleteWord();
+            }
+        }
     return (
         <>
         <NewWordModal userId={userId} show={showNewWordModal} onClose={handleNewWordClose}/>
-        <EditWordModal userId={userId} show={showEditWordModal} onClose={handleEditWordClose} wordData={wordData} />
+        <EditWordModal userId={userId} show={showEditWordModal} onClose={handleEditWordClose} onDelete={handleDeleteWord} wordData={wordData} />
         <UnknownWordsModal
           show={showUnknown}
           onClose={() => setShowUnknown(false)}
