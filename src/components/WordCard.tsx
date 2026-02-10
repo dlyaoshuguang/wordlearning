@@ -111,20 +111,20 @@ export const WordCard = ({
             <p className="mb-4">{description}</p>
         <h2 className="text-xl font-bold mt-4 mb-2">翻译</h2>
         <ul className="list-disc list-inside mb-4">
-            {translations.map((t, index) => (
-                <p key={index}>{t.pos}.{t.tran_cn}</p>
+            {translations.map((t) => (
+                <li style={{listStyle: 'none'}} key={t.pos + '-' + t.tran_cn}>{t.pos}.{t.tran_cn}</li>
             ))}
         </ul>
         <h2 className="text-xl font-bold mt-4 mb-2">短语</h2>
         <ul className="list-disc list-inside mb-4 list-style:none">
-            {phrases.map((p, index) => (
-                <p key={index}>{p.p_content} - {p.p_cn}</p>
+            {phrases.map((p) => (
+                <li style={{listStyle: 'none'}} key={p.p_content + '-' + p.p_cn}>{p.p_content} - {p.p_cn}</li>
             ))}
         </ul>
         <h2 className="text-xl font-bold mt-4 mb-2">例句</h2>
         <ul className="list-disc list-inside mb-4">
-            {sentences.map((s, index) => (
-                <p key={index}>{s.s_content} - {s.s_cn}</p>
+            {sentences.map((s) => (
+                <li style={{listStyle: 'none'}} key={s.s_content + '-' + s.s_cn}>{s.s_content} - {s.s_cn}</li>
             ))}
         </ul>
         <button

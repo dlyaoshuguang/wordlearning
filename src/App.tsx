@@ -8,7 +8,7 @@ export default function App() {
   // 从localStorage获取词库位置
   const getStoredIndex = () => {
     const stored = localStorage.getItem(`SupabaseWordIndex`)
-    return stored ? parseInt(stored, 10) : 1
+    return stored ? Number.parseInt(stored, 10) : 1
   }
   // 存储词库位置到localStorage
   const storeIndex = (index: number) => {
@@ -129,7 +129,7 @@ const handleDeleteWord = () => {
         <h2 className="text-2xl font-bold text-center mb-4">欢迎来到私房单词本</h2>
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
-        {!user.id ? (
+        {user.id === "" ? (
           <>
             <input
               type="email"
