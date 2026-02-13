@@ -35,23 +35,23 @@ export const WordCard = ({
         const [showNewWordModal, setShowNewWordModal] = useState(false);
         const [showEditWordModal, setShowEditWordModal] = useState(false);
         const [showUnknown, setShowUnknown] = useState(false);
-        const [yaounknownWords, setYaoUnknownWords] = useState<{ wordData: WordData }[]>(
+        const [unknownWords, setUnknownWords] = useState<{ wordData: WordData }[]>(
             () => {
-            const data = localStorage.getItem('yaounknownWords')
+            const data = localStorage.getItem(userId+'unknownWords')
             return data ? JSON.parse(data) : []
             }
         )
         const handleDontKnow = (wordData: WordData) => {
-            const existing = JSON.parse(localStorage.getItem('yaounknownWords') || '[]')
+            const existing = JSON.parse(localStorage.getItem(userId+'unknownWords') || '[]')
             existing.push({ wordData })
-            localStorage.setItem('yaounknownWords', JSON.stringify(existing))
-            setYaoUnknownWords(existing)
+            localStorage.setItem(userId+'unknownWords', JSON.stringify(existing))
+            setUnknownWords(existing)
         }
         const handleRemoveUnknown = (index: number) => {
-            const updated = [...yaounknownWords];
+            const updated = [...unknownWords];
             updated.splice(index, 1);
-            localStorage.setItem('yaounknownWords', JSON.stringify(updated));
-            setYaoUnknownWords(updated);
+            localStorage.setItem(userId+'unknownWords', JSON.stringify(updated));
+            setUnknownWords(updated);
         }; 
         if (isLoading||!wordData?.word) {
             return (
@@ -85,7 +85,7 @@ export const WordCard = ({
         <UnknownWordsModal
           show={showUnknown}
           onClose={() => setShowUnknown(false)}
-          yaounknownWords={yaounknownWords}
+          unknownWords={unknownWords}
           onRemove={handleRemoveUnknown}
         />
         <div>

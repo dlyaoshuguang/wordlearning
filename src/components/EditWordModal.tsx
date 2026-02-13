@@ -70,13 +70,14 @@ export const EditWordModal = ({ userId, show, onClose, onDelete,wordData }: Edit
           value={inputDescription}
           onChange={handleDescriptionChange}
           placeholder="释义"
-          className="edit-word-input"
+          className="edit-word-input p-2 border rounded mb-4"
         />
-        <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-5"
+        <div>
+        <button className="w-1/2 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
           onClick={() => updateWord(wordData.word, inputDescription)}>
           变更
         </button>
-        <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ml-5"
+        <button className="w-1/2 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
           onClick={() => {
             if (globalThis.confirm("确定要删除这个单词吗？")) {
               deleteWord();
@@ -84,8 +85,9 @@ export const EditWordModal = ({ userId, show, onClose, onDelete,wordData }: Edit
           }}>
           删除
         </button>
-        <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-5" 
-        onClick={() => onClose(editedFlag, editedWordData)}>关闭</button>   
+        <button className="w-1/2 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+        onClick={() => onClose(editedFlag, editedWordData)}>关闭</button>
+        </div>
       </ModalContent>
     </ModalOverlay>
   )

@@ -11,13 +11,13 @@ const MessageParagraph = styled.p`
 interface UnknownWordsModalProps {
   show: boolean
   onClose: () => void
-  yaounknownWords: { wordData: WordData }[]
+  unknownWords: { wordData: WordData }[]
   onRemove: (index: number) => void
 }
 export const UnknownWordsModal = ({
   show,
   onClose,
-  yaounknownWords,
+  unknownWords,
   onRemove
 }: UnknownWordsModalProps) => {
   const [isVisible, setIsVisible] = useState(show)
@@ -52,10 +52,10 @@ export const UnknownWordsModal = ({
         <MessageParagraph>
           点击单词面板底部的"不会"按钮，即可标记
         </MessageParagraph>
-        {yaounknownWords.length === 0 ? (
+        {unknownWords.length === 0 ? (
           <MessageParagraph>暂无不会的单词</MessageParagraph>
         ) : (
-          yaounknownWords.map((item, index) => (
+          unknownWords.map((item, index) => (
             <WordItem key={item.wordData.word}>
               <DeleteButton onClick={() => onRemove(index)}>×</DeleteButton>
               <strong>{item.wordData.word}</strong>
