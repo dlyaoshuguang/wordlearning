@@ -62,6 +62,10 @@ export const NewWordModal = ({ userId, show, onClose }: NewWordModalProps) => {
     }
   }
   const handleSubmit = async () => {
+    if(!inputWord || !inputDescription) {
+      alert("请完整输入单词和释义");
+      return;
+    }
     await findWord(inputWord, inputDescription)
   }
     if (!show) return null
