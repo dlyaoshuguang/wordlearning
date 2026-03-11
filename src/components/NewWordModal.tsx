@@ -44,7 +44,7 @@ export const NewWordModal = ({ userId, show, onClose }: NewWordModalProps) => {
     } 
     if (error) {
         console.error('Error:', error);
-        alert("未知错误，请稍后再试");
+        alert("未知错误，请稍后再试"+error.message);
     }
   }
   async function insertWord(newword: string, description: string) {
