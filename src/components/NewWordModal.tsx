@@ -37,6 +37,8 @@ export const NewWordModal = ({ userId, show, onClose }: NewWordModalProps) => {
     if (data && data.length > 0) {
         console.log('Data:', data);
         alert("该单词已存在");
+        setInputWord('');
+        setInputDescription('');
         setAddedFlag(false)
     }
     if (data && data.length === 0) {
