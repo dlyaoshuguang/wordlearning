@@ -40,6 +40,7 @@ export const NewWordModal = ({ userId, show, onClose }: NewWordModalProps) => {
         setInputWord('');
         setInputDescription('');
         setAddedFlag(false)
+        setNewWordData({word: newword, description: description})
     }
     if (data && data.length === 0) {
         await insertWord(inputWord, inputDescription)

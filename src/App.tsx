@@ -114,6 +114,12 @@ const handleNewWordClose = (addedFlag: boolean,newWordData: WordData) => {
       setWordDatas(prev => [...prev, newWordData]);
       setTotalWords(prev => prev + 1);
       setCurrentIndex(wordDatas.length + 1);
+  }else{
+    let wordIndex = wordDatas.findIndex(w => w.word === newWordData.word);
+    if (wordIndex !== -1) {
+      setWordData(newWordData);
+      setCurrentIndex(wordIndex + 1);
+    }
   }
 }
 const handleEditWordClose = (editedFlag: boolean, editedWordData: WordData) => {
