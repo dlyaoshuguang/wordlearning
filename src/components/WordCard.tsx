@@ -8,6 +8,7 @@ interface WordCardProps {
   wordData?: WordData
   //word: string
   description: string
+    bookId?: string
   translations: Translation[]
   phrases: Phrase[]
   sentences: Sentence[]
@@ -21,7 +22,8 @@ onDeleteWord?: () => void
 export const WordCard = ({ 
     userId,
     wordData, 
-    description, 
+    description,
+    bookId, 
     translations, 
     phrases, 
     sentences, 
@@ -107,6 +109,8 @@ export const WordCard = ({
                 audioUS.play();
             }} className="ml-2 px-2 py-1 bg-green-500 text-white rounded">US🔊 {us}</button>
         </div>
+        <h2 className="text-xl font-bold mt-4 mb-2">单词类别</h2>
+        <p className="mb-4">{bookId}</p>
         <h2 className="text-xl font-bold mt-4 mb-2">释义</h2>
             <p className="mb-4">{description}</p>
         <h2 className="text-xl font-bold mt-4 mb-2">翻译</h2>

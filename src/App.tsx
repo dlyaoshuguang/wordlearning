@@ -21,6 +21,7 @@ export default function App() {
   const [us, setUs] = useState('美音');
   const [gb, setGb] = useState('英音');
   const [userId, setUserId] = useState("");
+  const [bookId, setBookId] = useState("");
     // 从localStorage获取词库位置
   const getStoredIndex = (userId: string) => {
     const stored = localStorage.getItem(userId+`SupabaseWordIndex`)
@@ -89,6 +90,7 @@ useEffect(() => {
           setSentences([]);
           setUs("");
           setGb("");
+          setBookId("");
           return;
         }
         console.log(response.data.data);
@@ -97,6 +99,7 @@ useEffect(() => {
         setSentences(response.data.data.sentences);
         setUs(response.data.data.usphone);
         setGb(response.data.data.ukphone);
+        setBookId(response.data.data.bookId);
       })
       .catch(error => {
         alert("出错了！"+error.message);       
@@ -187,6 +190,7 @@ const handleDeleteWord = () => {
               userId={userId}
               wordData={wordData||{id:0,word:'',description:''}}
               description={wordData?.description || ''}
+              bookId={bookId}
               translations={translations}
               phrases={phrases}
               sentences={sentences}
